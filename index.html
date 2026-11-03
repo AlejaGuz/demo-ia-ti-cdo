@@ -314,6 +314,26 @@ body.embed .qrc{display:none}
   #bars{min-height:220px}
 }
 @media (max-width:380px){.steps6{grid-template-columns:1fr}h1{font-size:24px}}
+/* ---- Réplicas y seguridad ---- */
+.rp h1{font-size:clamp(24px,2.6vw,40px)}.rp .sub{font-size:clamp(13px,1.1vw,16px);margin-top:4px}.rpl .act{padding:8px 14px!important;font-size:14px!important}
+.rp{padding-bottom:10px}
+.rph{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.rpl{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.rpl .act{text-decoration:none;color:#fff}
+.orig{display:inline-flex;align-items:center;gap:6px;color:#93C5FD;font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.orig small{color:var(--muted);font-weight:400;text-decoration:none}
+.rpf{flex:1;width:100%;min-height:0;border:1px solid var(--line);border-radius:14px;background:#fff;margin-top:10px}
+.segg{display:grid;grid-template-columns:1fr 2fr;gap:22px;margin-top:16px;flex:1;min-height:0}
+.roles{display:flex;flex-direction:column;gap:8px}.roles button{all:unset;cursor:pointer;padding:12px 14px;border-radius:12px;border:1px solid var(--line);font-weight:700;font-size:clamp(14px,1.15vw,17px);background:rgba(255,255,255,.04)}
+.roles button.on{background:var(--azul);border-color:var(--azul)}
+.doors{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.door{all:unset;cursor:pointer;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:6px;border:2px solid var(--line);transition:.3s}
+.door span{font-size:30px}.door b{font-size:clamp(14px,1.15vw,18px)}.door i{font-style:normal;font-weight:800;font-size:13px}
+.door.ok{background:rgba(5,150,105,.2);border-color:#34D399}.door.ok i{color:#6EE7B7}
+.door.no{opacity:.55;background:rgba(255,255,255,.03)}.door.no i{color:#FCA5A5}
+.pressfx2{transform:scale(.95)}
+.slog{margin-top:14px}.slog div div{padding:6px 0;border-bottom:1px solid var(--line);font-size:14px}.slog small{color:var(--muted)}.lok{color:#6EE7B7}.lno{color:#FCA5A5}
+@media (max-width:760px){.rpf{flex:none;height:78vh}.segg{display:flex;flex-direction:column}.doors{grid-template-columns:1fr 1fr}.rph{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -330,7 +350,7 @@ body.embed .qrc{display:none}
   </nav>
   <button class="fs" id="fsbtn" title="Pantalla completa (F)">⛶ Pantalla completa</button>
 </header>
-<div class="pnav" id="pnav"><span>Paneles con IA:</span><button data-s="sU">🚑 Urgencias</button><button data-s="sO">🛏️ Ocupación</button><button data-s="sP">📁 Proyectos</button><button data-s="sH">💬 Humanización</button><button data-s="sAu">🩺 Auditoría</button><button data-s="sT">🎙️ Transcripción</button></div>
+<div class="pnav" id="pnav"><span>Paneles con IA:</span><button data-s="sU">🚑 Urgencias</button><button data-s="sO">🛏️ Ocupación</button><button data-s="sP">📁 Proyectos</button><button data-s="sH">💬 Humanización</button><button data-s="sAu">🩺 Auditoría</button><button data-s="sT">🎙️ Transcripción</button><button data-s="sS">🔐 Seguridad</button></div>
 
 <main>
 <!-- 1 -->
@@ -444,88 +464,58 @@ body.embed .qrc{display:none}
     </div>
   </div>
 </section>
-<!-- Urgencias -->
-<section id="sU">
-  <div class="hrow"><h1>Urgencias: <em>lo que pasa, cuando pasa</em></h1><span class="cbadge">🔒 Datos modificados por confidencialidad</span></div>
-  <div class="sub">Toque un triage para filtrar. Pruebe “Llega un paciente” y “Atender”. Cada segundo pasa un minuto.</div>
-  <div class="kpis">
-    <div class="panel kp"><div class="n" id="uK1">0%</div><div class="t">ocupación de urgencias</div></div>
-    <div class="panel kp"><div class="n" id="uK2" style="color:#34D399">0%</div><div class="t">esperando dentro del tiempo meta</div></div>
-    <div class="panel kp"><div class="n" id="uK3" style="color:#F87171">0%</div><div class="t">esperando más de lo debido</div></div>
-  </div>
-  <div class="btns" style="margin-top:14px"><span class="clock" id="uClock">10:30</span>
-    <div class="btns" id="uFil"><button class="pb on" data-f="all">Todos</button><button class="pb" data-f="1">Triage I</button><button class="pb" data-f="2">Triage II</button><button class="pb" data-f="3">Triage III</button><button class="pb" data-f="4">Triage IV</button><button class="pb" data-f="5">Triage V</button></div>
-    <span style="flex:1"></span><button class="act" id="uAdd">🚑 Llega un paciente</button><button class="act g" id="uAtt">✅ Atender</button></div>
-  <div class="ulist" id="uList"></div>
-</section>
-
-<!-- Ocupación -->
-<section id="sO">
-  <div class="hrow"><h1>Ocupación: <em>alerta antes de que se llene</em></h1><span class="cbadge">🔒 Datos modificados por confidencialidad</span></div>
-  <div class="sub">Cambie el periodo o simule ingresos: cuando un servicio pasa la línea del 90%, se prende la alerta.</div>
-  <div class="kpis">
-    <div class="panel kp"><div class="n" id="oK1">0%</div><div class="t">ocupación general</div></div>
-    <div class="panel kp"><div class="n" id="oK2" style="color:#F87171">0</div><div class="t">servicios en alerta (más de 90%)</div></div>
-    <div class="panel kp"><div class="n" id="oK3" style="color:#34D399">0%</div><div class="t">camas libres</div></div>
-  </div>
-  <div class="btns" style="margin-top:14px"><div class="btns" id="oPer"><button class="pb on" data-p="hoy">Hoy</button><button class="pb" data-p="semana">Esta semana</button><button class="pb" data-p="mes">Este mes</button></div>
-    <span style="flex:1"></span><button class="act" id="oSim">➕ Simular ingresos</button><button class="act o" id="oRes">↺ Volver</button></div>
-  <div class="panel" style="margin-top:12px"><div class="olist" id="oList"></div></div>
-</section>
-
-<!-- Proyectos -->
-<section id="sP">
-  <div class="hrow"><h1>Gestión de Proyectos: <em>cada idea, evaluada</em></h1><span class="cbadge">🔒 Datos modificados por confidencialidad</span></div>
-  <div class="sub">Elija una idea de ejemplo y presione “Evaluar”. La IA arma la carpeta; las reglas de la clínica deciden.</div>
-  <div class="grid2" style="grid-template-columns:1fr 2fr">
-    <div class="panel"><div style="font-weight:800">Ideas que llegan de las áreas <span class="src">(ejemplos)</span></div>
-      <div class="ideas" id="pIdeas"></div>
-      <button class="act" id="pGo" style="margin-top:14px">✨ Evaluar con IA</button></div>
-    <div><div class="steps6" id="pSteps"></div><div class="verd" id="pVer"></div></div>
+<!-- Seguridad -->
+<section id="sS">
+  <div class="hrow"><h1>Seguridad: <em>cada quien con su tarjeta</em></h1><span class="tag">Ejemplo ilustrativo</span></div>
+  <div class="sub">Como las tarjetas de acceso del hospital: cada tarjeta abre solo las puertas de su área. Elija una persona y toque un panel.</div>
+  <div class="segg">
+   <div class="panel"><div style="font-weight:800;margin-bottom:10px">🪪 ¿Quién entra?</div><div class="roles" id="roles"></div>
+    <div class="src" style="margin-top:12px">Un administrador asigna y quita permisos (gestión de roles). Roles y permisos de ejemplo.</div>
+    <a class="orig" href="https://paneles.cdoenlinea.com.co/" target="_blank" rel="noopener" style="margin-top:12px">Ver original en paneles ↗ <small>(requiere inicio de sesión)</small></a></div>
+   <div><div class="doors" id="doors"></div><div class="panel slog"><div style="font-weight:800">👁️ Registro de accesos</div><div id="slog" class="ph">Toque un panel para ver qué queda registrado.</div></div></div>
   </div>
 </section>
-
-<!-- Humanización -->
-<section id="sH">
-  <div class="hrow"><h1>Humanización: <em>qué siente el paciente</em></h1><span class="cbadge">🔒 Datos modificados por confidencialidad</span></div>
-  <div class="sub">Comentarios de ejemplo. Presione “Clasificar” y luego filtre por cómo se sintió el paciente o por tema.</div>
-  <div class="grid2" style="grid-template-columns:1.7fr 1fr">
-    <div class="panel" style="overflow:hidden"><div class="btns"><button class="act" id="hGo">✨ Clasificar con IA</button>
-      <div class="btns" id="hFil"><button class="pb on" data-s="all">Todos</button><button class="pb" data-s="pos">😊 Bien</button><button class="pb" data-s="neu">😐 Regular</button><button class="pb" data-s="neg">😟 Mal</button></div></div>
-      <div class="hlist" id="hList"></div></div>
-    <div class="panel"><div style="font-weight:800">Resumen de estos ejemplos</div><div class="hsum" id="hSum"></div>
-      <div style="font-weight:800;margin-top:18px">Temas</div><div class="btns" id="hTem" style="margin-top:8px"></div>
-      <div class="src">Comentarios inventados. La IA real lee todas las encuestas; aquí solo mostramos la idea.</div></div>
-  </div>
+<!-- Monitor de urgencias -->
+<section id="sU" class="rp">
+  <div class="rph"><div class="hrow"><h1>Urgencias: <em>monitor del servicio</em></h1><span class="cbadge">🔒 Datos modificados por confidencialidad</span></div>
+   <div class="rpl"><a class="act" href="paneles/urgencias.html" target="_blank" rel="noopener">⛶ Pantalla completa</a><a class="orig" href="https://paneles.cdoenlinea.com.co/direccion-medica/urgencias/" target="_blank" rel="noopener">Ver original en paneles ↗ <small>(requiere inicio de sesión)</small></a></div></div>
+  <div class="sub">Réplica del panel real con datos sintéticos (mismo diseño, datos inventados). Toque Monitoreo / Estadísticas, los filtros por especialidad, Prepagada y el mes.</div>
+  <iframe class="rpf" data-src="paneles/urgencias.html" title="Monitor de urgencias · réplica con datos sintéticos"></iframe>
 </section>
-
-<!-- Auditoría -->
-<section id="sAu">
-  <div class="hrow"><h1>Auditoría clínica: <em>la IA prepara</em></h1><span class="cbadge">🔒 Datos modificados por confidencialidad</span></div>
-  <div class="sub">Elija una historia de ejemplo y avance paso a paso. Al final, el auditor valida.</div>
-  <div class="grid2" style="grid-template-columns:1fr 1.2fr">
-    <div class="panel"><div class="btns" id="aCase"><button class="pb on" data-c="A">Historia de ejemplo A</button><button class="pb" data-c="B">Historia de ejemplo B</button></div>
-      <div class="hist" id="aHist" style="margin-top:12px"></div></div>
-    <div class="panel"><div class="stepper" id="aStep"><span>1 · Lista de chequeo</span><span>2 · La IA lee</span><span>3 · Comparar con el auditor</span><span>4 · El auditor valida</span></div>
-      <div class="btns" style="margin-top:12px"><button class="act" id="aGo">▶ Siguiente paso</button><button class="act o" id="aRe">↺ Empezar de nuevo</button></div>
-      <div class="aout" id="aOut"></div><div class="stamp" id="aStamp">✔ VALIDADO POR EL AUDITOR</div></div>
-  </div>
+<!-- Ocupación Hospitalaria -->
+<section id="sO" class="rp">
+  <div class="rph"><div class="hrow"><h1>Ocupación <em>hospitalaria</em></h1><span class="cbadge">🔒 Datos modificados por confidencialidad</span></div>
+   <div class="rpl"><a class="act" href="paneles/ocupacion.html" target="_blank" rel="noopener">⛶ Pantalla completa</a><a class="orig" href="https://paneles.cdoenlinea.com.co/planeacion/ocupacion/" target="_blank" rel="noopener">Ver original en paneles ↗ <small>(requiere inicio de sesión)</small></a></div></div>
+  <div class="sub">Réplica del panel real con datos sintéticos (mismo diseño, datos inventados). Abra "Detalle por Estación", cambie de pestaña, ordene la matriz y filtre por EPS.</div>
+  <iframe class="rpf" data-src="paneles/ocupacion.html" title="Ocupación Hospitalaria · réplica con datos sintéticos"></iframe>
 </section>
-
-<!-- Transcripción -->
-<section id="sT">
-  <div class="hrow"><h1>Transcripción: <em>el médico dicta, la IA escribe</em></h1><span class="cbadge">🔒 Datos modificados por confidencialidad</span></div>
-  <div class="sub">Elija el examen y presione “Dictar”. Puede tocar el informe para corregirlo antes de aprobar.</div>
-  <div class="grid2">
-    <div class="panel"><div class="btns" id="tEx"><button class="pb on" data-e="rx">🩻 Radiografía de tórax</button><button class="pb" data-e="eco">❤️ Ecocardiograma</button></div>
-      <div class="btns" style="margin-top:12px"><button class="act" id="tGo">🎙️ Dictar</button></div>
-      <div class="wave" id="tWave"></div><div class="dict" id="tDict">El dictado aparecerá aquí…</div>
-      <div class="src">Dictado e informe de ejemplo, inventados.</div></div>
-    <div class="rep"><h4><span id="tTit">Informe</span><span style="font-size:12px;color:#64748B">BORRADOR DE LA IA</span></h4>
-      <div id="tFields"></div>
-      <div class="btns"><button class="act g" id="tOk" disabled>✅ Revisar y aprobar</button></div>
-      <div class="stamp" id="tStamp">✔ APROBADO POR EL ESPECIALISTA</div></div>
-  </div>
+<!-- Gestión de Proyectos Analítica -->
+<section id="sP" class="rp">
+  <div class="rph"><div class="hrow"><h1>Gestión de <em>Proyectos</em></h1><span class="cbadge">🔒 Datos modificados por confidencialidad</span></div>
+   <div class="rpl"><a class="act" href="paneles/proyectos.html" target="_blank" rel="noopener">⛶ Pantalla completa</a><a class="orig" href="https://paneles.cdoenlinea.com.co/analitica/proyectos/" target="_blank" rel="noopener">Ver original en paneles ↗ <small>(requiere inicio de sesión)</small></a></div></div>
+  <div class="sub">Réplica del panel real con datos sintéticos (mismo diseño, datos inventados). Abra un proyecto, "Procesar transcripción", cambie el estado y mueva los puntajes de Priorización: el score se recalcula.</div>
+  <iframe class="rpf" data-src="paneles/proyectos.html" title="Gestión de Proyectos Analítica · réplica con datos sintéticos"></iframe>
+</section>
+<!-- Track Humanización -->
+<section id="sH" class="rp">
+  <div class="rph"><div class="hrow"><h1>Track <em>Humanización</em></h1><span class="cbadge">🔒 Datos modificados por confidencialidad</span></div>
+   <div class="rpl"><a class="act" href="paneles/humanizacion.html" target="_blank" rel="noopener">⛶ Pantalla completa</a><a class="orig" href="https://paneles.cdoenlinea.com.co/experiencia/humanizacion/dashboard" target="_blank" rel="noopener">Ver original en paneles ↗ <small>(requiere inicio de sesión)</small></a></div></div>
+  <div class="sub">Réplica del panel real con datos sintéticos (mismo diseño, datos inventados). Cree una solicitud, mire Estadísticas encuestas → Comentarios → "Clasificar con IA", y la Presentación.</div>
+  <iframe class="rpf" data-src="paneles/humanizacion.html" title="Track Humanización · réplica con datos sintéticos"></iframe>
+</section>
+<!-- Auditoría de Historias Clínicas -->
+<section id="sAu" class="rp">
+  <div class="rph"><div class="hrow"><h1>Auditoría de <em>Historias Clínicas</em></h1><span class="cbadge">🔒 Datos modificados por confidencialidad</span></div>
+   <div class="rpl"><a class="act" href="paneles/auditoria.html" target="_blank" rel="noopener">⛶ Pantalla completa</a><a class="orig" href="https://paneles.cdoenlinea.com.co/direccion-medica/auditoria-hc/" target="_blank" rel="noopener">Ver original en paneles ↗ <small>(requiere inicio de sesión)</small></a></div></div>
+  <div class="sub">Réplica del panel real con datos sintéticos (mismo diseño, datos inventados). Abra "Lógica de funcionamiento", presione "Revisar historias" y luego "Revisar" en una fila.</div>
+  <iframe class="rpf" data-src="paneles/auditoria.html" title="Auditoría de Historias Clínicas · réplica con datos sintéticos"></iframe>
+</section>
+<!-- Dictado estructurado de ecocardiograma -->
+<section id="sT" class="rp">
+  <div class="rph"><div class="hrow"><h1>Transcripción: <em>dictado de ecocardiograma</em></h1><span class="cbadge">🔒 Datos modificados por confidencialidad</span></div>
+   <div class="rpl"><a class="act" href="paneles/transcripcion.html" target="_blank" rel="noopener">⛶ Pantalla completa</a><a class="orig" href="https://paneles.cdoenlinea.com.co/direccion-medica/transcripcion-radiologos/" target="_blank" rel="noopener">Ver original en paneles ↗ <small>(requiere inicio de sesión)</small></a></div></div>
+  <div class="sub">Réplica del panel real con datos sintéticos (mismo diseño, datos inventados). Presione "Iniciar grabación", luego "Transcribir grabación": el informe se llena solo.</div>
+  <iframe class="rpf" data-src="paneles/transcripcion.html" title="Dictado estructurado de ecocardiograma · réplica con datos sintéticos"></iframe>
 </section>
 </main>
 
@@ -552,7 +542,7 @@ function go(i){
   if(onEnter[i])onEnter[i]();
 }
 navb.forEach(b=>b.onclick=()=>go(+b.dataset.i));
-const NAMES={s0:'antes',s1:'mesa',sA:'equipo',s2:'plataforma',s3:'prueba',s4:'bitacora',sU:'urgencias',sO:'ocupacion',sP:'proyectos',sH:'humanizacion',sAu:'auditoria',sT:'transcripcion'};
+const NAMES={s0:'antes',s1:'mesa',sA:'equipo',s2:'plataforma',s3:'prueba',s4:'bitacora',sU:'urgencias',sO:'ocupacion',sP:'proyectos',sH:'humanizacion',sAu:'auditoria',sT:'transcripcion',sS:'seguridad'};
 $$('#pnav button').forEach(b=>b.onclick=()=>go(secs.findIndex(x=>x.id===b.dataset.s)));
 document.addEventListener('keydown',e=>{
   if(e.target.tagName==='TEXTAREA')return;
@@ -801,127 +791,19 @@ async function tap(sel){const b=typeof sel==='string'?$(sel):sel;if(!b)return;co
 const PI={}; // índice de sección por id
 secs.forEach((s,k)=>PI[s.id]=k);
 
-/* Urgencias */
-const TRI=[{k:'I',c:'#F87171',meta:5},{k:'II',c:'#FB923C',meta:30},{k:'III',c:'#FACC15',meta:60},{k:'IV',c:'#4ADE80',meta:120},{k:'V',c:'#60A5FA',meta:240}];
-const MOT=['Dolor en el pecho','Fiebre alta','Golpe en el brazo','Dolor de estómago','Dolor de cabeza','Le cuesta respirar','Mareo','Herida pequeña'];
-let U=[],uF='all',uSeq=100,uMin=10*60+30;
-function uInit(){uSeq=100;uMin=10*60+30;U=[[1,'Le cuesta respirar',3],[2,'Dolor en el pecho',22],[2,'Fiebre alta',41],[3,'Dolor de estómago',35],[3,'Mareo',72],[4,'Golpe en el brazo',64],[4,'Herida pequeña',131],[5,'Dolor de cabeza',90]].map(a=>({id:'P-'+(++uSeq),t:a[0],m:a[1],w:a[2]}));}
-function uSorted(){return U.slice().sort((a,b)=>a.t-b.t||b.w-a.w);}
-function uRender(){
-  const rows=uSorted().filter(p=>uF==='all'||p.t==uF);
-  $('#uList').innerHTML=rows.map(p=>{const T=TRI[p.t-1],r=p.w/T.meta,late=r>1;
-    return `<div class="urow${late?' late':''}${p.nw?' nw':''}" data-id="${p.id}"><span class="tp" style="background:${T.c}">${T.k}</span><b>${p.id}</b><span>${p.m}</span><div class="wb"><i style="width:${Math.min(100,r*100)}%;background:${late?'#DC2626':T.c}"></i></div><span class="wm">${p.w} min<small>meta ${T.meta} min</small></span></div>`}).join('')||'<div class="ph">Nadie esperando en este triage 🎉</div>';
-  U.forEach(p=>p.nw=false);
-  const ok=U.length?Math.round(100*U.filter(p=>p.w<=TRI[p.t-1].meta).length/U.length):100;
-  $('#uK1').textContent=Math.min(99,48+U.length*5)+'%';$('#uK2').textContent=ok+'%';$('#uK3').textContent=(100-ok)+'%';
-  $('#uClock').textContent='🕒 '+String(Math.floor(uMin/60)%24).padStart(2,'0')+':'+String(uMin%60).padStart(2,'0');
-  $$('#uFil button').forEach(b=>b.classList.toggle('on',b.dataset.f==uF));
-}
-$$('#uFil button').forEach(b=>b.onclick=()=>{uF=b.dataset.f;uRender();});
-$('#uAdd').onclick=()=>{const t=1+Math.floor(Math.random()*5);U.push({id:'P-'+(++uSeq),t:t,m:MOT[Math.floor(Math.random()*MOT.length)],w:0,nw:true});uF='all';uRender();};
-$('#uAtt').onclick=()=>{const p=uSorted()[0];if(!p)return;const row=$(`.urow[data-id="${p.id}"]`);if(row)row.classList.add('out');setTimeout(()=>{U=U.filter(x=>x!==p);uRender();},450);};
-setInterval(()=>{if(cur!==PI.sU)return;uMin++;U.forEach(p=>p.w++);uRender();},1000);
-uInit();uRender();
+/* Réplicas de paneles (iframes) y seguridad */
+const AUTOS={};
 
-/* Ocupación */
-const SERV=['Hospitalización adultos','UCI adultos','UCI recién nacidos','Pediatría','Maternidad','Cirugía','Observación urgencias'];
-const OD={hoy:[88,93,79,71,84,76,96],semana:[85,90,82,68,80,73,92],mes:[83,88,80,72,78,70,89]};
-let oP='hoy',O=OD.hoy.slice();
-$('#oList').innerHTML=SERV.map((s,i)=>`<div class="orow"><span>${s}</span><div class="otr"><i id="oB${i}"></i><b></b></div><span id="oV${i}" style="text-align:right">0%</span><span id="oA${i}"></span></div>`).join('');
-function oRender(){
-  O.forEach((v,i)=>{const c=v>90?'#DC2626':v>=80?'#D97706':'#059669';const b=$('#oB'+i);b.style.width=v+'%';b.style.background=c;
-    $('#oV'+i).textContent=v+'%';$('#oA'+i).innerHTML=v>90?'<span class="oal">⚠ casi lleno</span>':'';});
-  const avg=Math.round(O.reduce((a,b)=>a+b,0)/O.length);
-  $('#oK1').textContent=avg+'%';$('#oK2').textContent=O.filter(v=>v>90).length+' de '+O.length;$('#oK3').textContent=(100-avg)+'%';
-  $$('#oPer button').forEach(b=>b.classList.toggle('on',b.dataset.p===oP));
-}
-$$('#oPer button').forEach(b=>b.onclick=()=>{oP=b.dataset.p;O=OD[oP].slice();oRender();});
-$('#oSim').onclick=()=>{const idx=[0,1,2,3,4,5,6].sort(()=>Math.random()-.5).slice(0,3);idx.forEach(i=>O[i]=Math.min(100,O[i]+2+Math.floor(Math.random()*5)));oRender();};
-$('#oRes').onclick=()=>{O=OD[oP].slice();oRender();};
-
-/* Proyectos */
-const IDEAS={
- adm:{t:'⏱️ Menos espera en admisiones',r:['Problema, área y responsables, en una sola carpeta.','Va primero: toca a muchos pacientes cada día.','Hoy la espera se mide por turno.','Los datos salen del sistema de turnos.','Beneficio alto, costo medio.','Comparar la espera antes y después.'],p:'ALTA'},
- cam:{t:'🛏️ Tablero de camas en tiempo real',r:['Problema, área y responsables, en una sola carpeta.','Importante: ayuda a dar salida y recibir pacientes.','Hoy se consolida a mano, dos veces al día.','Los datos salen del sistema clínico.','Beneficio alto, costo bajo.','Medir cuánto tarda una cama en quedar lista.'],p:'ALTA'},
- rec:{t:'📲 Recordatorio de citas por mensaje',r:['Problema, área y responsables, en una sola carpeta.','Útil, pero no es urgente.','Hoy no se mide cuántos pacientes no llegan.','Faltan datos: hay que empezar a medir.','Beneficio medio, costo medio.','Comparar inasistencias antes y después.'],p:'MEDIA'}};
-const PST=[['📁','Arma la carpeta'],['🚦','Decide qué va primero'],['📏','Mide cómo estamos hoy'],['🔍','Revisa de dónde salen los datos'],['💰','Costo y beneficio'],['🧪','Cómo probamos el resultado']];
-let pSel='adm',pRun=0;
-$('#pIdeas').innerHTML=Object.keys(IDEAS).map(k=>`<button class="pb${k===pSel?' on':''}" data-k="${k}">${IDEAS[k].t}</button>`).join('');
-function pReset(){$('#pSteps').innerHTML=PST.map((s,i)=>`<div class="st" id="pS${i}"><h4>${s[0]} ${s[1]}</h4><p>…</p></div>`).join('');$('#pVer').className='verd';}
-$$('#pIdeas button').forEach(b=>b.onclick=()=>{pSel=b.dataset.k;$$('#pIdeas button').forEach(x=>x.classList.toggle('on',x===b));pRun++;pReset();});
-$('#pGo').onclick=async()=>{const my=++pRun,I=IDEAS[pSel];pReset();
-  for(let i=0;i<6;i++){const s=$('#pS'+i);s.classList.add('busy');s.querySelector('p').textContent='La IA está trabajando…';await sleep(550);if(my!==pRun)return;
-    s.classList.remove('busy');s.classList.add('on');s.querySelector('p').textContent=I.r[i];}
-  $('#pVer').innerHTML=`<b>⚖️ Las reglas de la clínica deciden: prioridad ${I.p}</b><div class="src" style="margin-top:6px">📝 Todo queda registrado. Ejemplo ilustrativo.</div>`;$('#pVer').classList.add('on');};
-pReset();
-
-/* Humanización */
-const HC=[['La enfermera de la noche fue un ángel, muy atenta.','pos','Trato'],['Esperé cuatro horas en urgencias y nadie me explicó nada.','neg','Espera'],['El médico me explicó todo con paciencia.','pos','Información'],['La habitación estaba limpia, pero el baño no tenía agua caliente.','neu','Instalaciones'],['En admisiones me pidieron los mismos papeles tres veces.','neg','Trámites'],['Muy buena atención del personal de cirugía.','pos','Trato'],['La comida llegaba fría.','neg','Instalaciones'],['Me dieron la salida rápido y con instrucciones claras.','pos','Información']];
-const SL={pos:'😊 Bien',neu:'😐 Regular',neg:'😟 Mal'},SC={pos:'#34D399',neu:'#FBBF24',neg:'#F87171'};
-let hDone=false,hS='all',hT='all';
-$('#hList').innerHTML=HC.map((c,i)=>`<div class="hc" id="hc${i}"><q>${c[0]}</q><div class="lb"><span class="s-${c[1]}">${SL[c[1]]}</span><span class="th">${c[2]}</span></div></div>`).join('');
-const TEM=['all'].concat([...new Set(HC.map(c=>c[2]))]);
-$('#hTem').innerHTML=TEM.map(t=>`<button class="pb${t==='all'?' on':''}" data-t="${t}">${t==='all'?'Todos':t}</button>`).join('');
-$('#hSum').innerHTML=['pos','neu','neg'].map(s=>`<div><span>${SL[s]}</span><div class="tr"><i id="hb${s}" style="background:${SC[s]}"></i></div><span id="hn${s}">–</span></div>`).join('');
-function hRender(){HC.forEach((c,i)=>{const e=$('#hc'+i);e.classList.toggle('cl',hDone);e.classList.toggle('hide',hDone&&((hS!=='all'&&c[1]!==hS)||(hT!=='all'&&c[2]!==hT)));});
-  ['pos','neu','neg'].forEach(s=>{const n=HC.filter(c=>c[1]===s).length;$('#hb'+s).style.width=hDone?(100*n/HC.length)+'%':'0';$('#hn'+s).textContent=hDone?n+' de '+HC.length:'–';});
-  $$('#hFil button').forEach(b=>b.classList.toggle('on',b.dataset.s===hS));$$('#hTem button').forEach(b=>b.classList.toggle('on',b.dataset.t===hT));}
-$('#hGo').onclick=async()=>{hS='all';hT='all';hDone=false;hRender();for(let i=0;i<HC.length;i++){$('#hc'+i).classList.add('cl');await sleep(220);}hDone=true;hRender();};
-$$('#hFil button').forEach(b=>b.onclick=()=>{hDone=true;hS=b.dataset.s;hRender();});
-$$('#hTem button').forEach(b=>b.onclick=()=>{hDone=true;hT=b.dataset.t;hRender();});
-hRender();
-
-/* Auditoría */
-const AC={
- A:{h:[['Motivo de consulta','Dolor de estómago desde hace 2 días.',1],['Antecedentes y alergias','(vacío)',0],['Examen físico','Abdomen blando, dolor al lado derecho.',1],['Diagnóstico','Dolor abdominal en estudio.',1],['Plan','Se pide ecografía. Control en 24 horas.',1],['Firma del médico','Registrada.',1]],
-   ia:[['⚠️ Faltan antecedentes y alergias.','Es obligatorio dejarlos escritos.'],['⚠️ Se pide una ecografía sin decir por qué.','Un auditor pediría la razón.'],['✔ El diagnóstico concuerda con el examen.','Lo escrito tiene sentido.']],
-   cmp:[['✔ Coincide con el auditor','Faltan antecedentes y alergias.'],['✖ No coincide','El auditor ve la razón en la nota de enfermería. La IA aprende de esto.'],['✔ Coincide con el auditor','El diagnóstico concuerda.']]},
- B:{h:[['Motivo de consulta','Control de presión alta.',1],['Antecedentes y alergias','Hipertensión. Sin alergias conocidas.',1],['Examen físico','Presión controlada, sin hallazgos.',1],['Diagnóstico','Hipertensión controlada.',1],['Plan','Continuar medicamento. Control en 3 meses.',1],['Firma del médico','(sin firma)',0]],
-   ia:[['⚠️ Falta la firma del médico.','Sin firma, la historia no queda completa.'],['✔ El plan es claro y tiene control.','Nada que corregir.']],
-   cmp:[['✔ Coincide con el auditor','Falta la firma.'],['✔ Coincide con el auditor','El plan está bien.']]}};
-let aC='A',aS=0;
-function aRender(){const C=AC[aC];
-  $('#aHist').innerHTML=C.h.map(x=>`<div class="${aS>=1?(x[2]?'ok':'bad'):''}"><b>${aS>=1?(x[2]?'✅ ':'❌ '):''}${x[0]}</b>${x[1]}</div>`).join('');
-  $$('#aStep span').forEach((s,i)=>{s.classList.toggle('on',i===aS-1);s.classList.toggle('done',i<aS-1);});
-  let o='';if(aS===1)o=`<div>📋 La lista revisa lo básico: <b>${C.h.filter(x=>x[2]).length} de ${C.h.length}</b> campos completos.</div>`;
-  if(aS===2)o=C.ia.map(x=>`<div>${x[0]}<small>${x[1]}</small></div>`).join('');
-  if(aS>=3)o=C.cmp.map(x=>`<div>${x[0]}<small>${x[1]}</small></div>`).join('');
-  $('#aOut').innerHTML=o;$('#aStamp').classList.toggle('on',aS>=4);
-  $('#aGo').textContent=aS>=3?'👨‍⚕️ Validar como auditor':'▶ Siguiente paso';$('#aGo').disabled=aS>=4;}
-$$('#aCase button').forEach(b=>b.onclick=()=>{aC=b.dataset.c;aS=0;$$('#aCase button').forEach(x=>x.classList.toggle('on',x===b));aRender();});
-$('#aGo').onclick=()=>{aS=Math.min(4,aS+1);aRender();};$('#aRe').onclick=()=>{aS=0;aRender();};
-aRender();
-
-/* Transcripción */
-const DX={rx:{t:'Radiografía de tórax',d:'Eh… radiografía de tórax de frente y de lado… los pulmones se ven limpios, sin manchas… el corazón de tamaño normal… los ángulos de abajo libres… en conclusión, normal, nada agudo.',
-   f:[['Estudio','Radiografía de tórax PA y lateral.'],['Hallazgos','Campos pulmonares sin consolidaciones. Silueta cardíaca de tamaño normal. Senos costofrénicos libres.'],['Conclusión','Estudio sin hallazgos agudos.']]},
- eco:{t:'Ecocardiograma',d:'Ecocardiograma transtorácico… el ventrículo izquierdo de tamaño normal y se contrae bien… las válvulas sin problemas importantes… no hay líquido alrededor del corazón… conclusión, eco normal.',
-   f:[['Estudio','Ecocardiograma transtorácico.'],['Hallazgos','Ventrículo izquierdo de tamaño normal, con función conservada. Válvulas sin alteraciones significativas. Sin derrame pericárdico.'],['Conclusión','Ecocardiograma dentro de límites normales.']]}};
-let tE='rx',tRun=0;
-$('#tWave').innerHTML='<i></i>'.repeat(28);
-function tReset(){const D=DX[tE];$('#tTit').textContent='Informe · '+D.t;$('#tDict').textContent='El dictado aparecerá aquí…';
-  $('#tFields').innerHTML=D.f.map((f,i)=>`<div class="f"><b>${f[0]}</b><div id="tf${i}" contenteditable="true"></div></div>`).join('');
-  $('#tOk').disabled=true;$('#tStamp').classList.remove('on');}
-$$('#tEx button').forEach(b=>b.onclick=()=>{tE=b.dataset.e;tRun++;$$('#tEx button').forEach(x=>x.classList.toggle('on',x===b));tReset();});
-$('#tGo').onclick=async()=>{const my=++tRun,D=DX[tE];tReset();const w=D.d.split(' ');let s='';const bars=$$('#tWave i');
-  for(const x of w){s+=(s?' ':'')+x;$('#tDict').textContent='“'+s+'”';bars.forEach(b=>b.style.height=(6+Math.random()*34)+'px');await sleep(110);if(my!==tRun)return;}
-  bars.forEach(b=>b.style.height='6px');
-  for(let i=0;i<D.f.length;i++){const e=$('#tf'+i);e.classList.add('typing');const tx=D.f[i][1];for(let k=0;k<=tx.length;k+=3){e.textContent=tx.slice(0,k);await sleep(16);if(my!==tRun)return;}e.textContent=tx;e.classList.remove('typing');}
-  $('#tOk').disabled=false;};
-$('#tOk').onclick=()=>{$('#tStamp').classList.add('on');$('#tOk').disabled=true;};
-tReset();
-
-/* Al entrar a cada panel */
-onEnter[PI.sU]=()=>{uRender();};
-onEnter[PI.sO]=()=>{O.forEach((v,i)=>$('#oB'+i).style.width='0');setTimeout(oRender,80);};
-/* Recorrido automático (para grabar GIF): ?auto=1 */
-const AUTOS={
- sU:async()=>{await sleep(1200);await tap('#uFil [data-f="2"]');await sleep(1400);await tap('#uFil [data-f="all"]');await sleep(700);await tap('#uAdd');await sleep(1200);await tap('#uAdd');await sleep(1200);await tap('#uAtt');await sleep(1500);},
- sO:async()=>{await sleep(1600);await tap('#oSim');await sleep(1500);await tap('#oSim');await sleep(1500);await tap('#oPer [data-p="mes"]');await sleep(1600);await tap('#oPer [data-p="hoy"]');await sleep(1200);},
- sP:async()=>{await sleep(900);await tap('#pIdeas [data-k="cam"]');await sleep(500);await tap('#pGo');await sleep(4300);},
- sH:async()=>{await sleep(900);await tap('#hGo');await sleep(2600);await tap('#hFil [data-s="neg"]');await sleep(1700);await tap('#hFil [data-s="all"]');await sleep(600);await tap('#hTem [data-t="Trato"]');await sleep(1800);},
- sAu:async()=>{await sleep(900);for(let i=0;i<4;i++){await tap('#aGo');await sleep(1500);}await sleep(800);},
- sT:async()=>{await sleep(800);await tap('#tGo');await sleep(6200);await tap('#tOk');await sleep(1600);}};
+secs.forEach((s,k)=>{const fr=s.querySelector('iframe[data-src]');if(fr){const prev=onEnter[k];onEnter[k]=()=>{if(!fr.src)fr.src=fr.dataset.src;if(prev)prev();};}});
+const ROLES=[['🩺','Médico de urgencias',['Urgencias','Ocupación','Transcripción']],['💉','Enfermería',['Urgencias','Ocupación']],['💬','Humanización',['Humanización']],['📊','Analítica',['Proyectos','Ocupación','Urgencias']],['📋','Auditoría clínica',['Auditoría HC']],['🛡️','Administrador de roles',['Gestión de roles']]];
+const DOORS=[['🚑','Urgencias'],['🛏️','Ocupación'],['📁','Proyectos'],['💬','Humanización'],['🩺','Auditoría HC'],['🎙️','Transcripción'],['🛡️','Gestión de roles']];
+let role=0;const slog=[];
+function seg(){const R0=ROLES[role];$('#roles').innerHTML=ROLES.map((r,i)=>`<button class="${i===role?'on':''}" data-i="${i}">${r[0]} ${r[1]}</button>`).join('');
+ $('#doors').innerHTML=DOORS.map(d=>{const ok=R0[2].includes(d[1]);return `<button class="door ${ok?'ok':'no'}" data-d="${d[1]}"><span>${d[0]}</span><b>${d[1]}</b><i>${ok?'🔓 Abre':'🔒 Cerrado'}</i></button>`}).join('');
+ $$('#roles button').forEach(b=>b.onclick=()=>{role=+b.dataset.i;seg();});
+ $$('#doors .door').forEach(b=>b.onclick=()=>{const ok=b.classList.contains('ok');const t=new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  slog.unshift(`<div class="${ok?'lok':'lno'}">${t} · ${ROLES[role][1]} → ${b.dataset.d}: ${ok?'✔ entró':'✖ sin permiso'} <small>quedó registrado</small></div>`);$('#slog').className='';$('#slog').innerHTML=slog.slice(0,6).join('');b.classList.add('pressfx2');setTimeout(()=>b.classList.remove('pressfx2'),400);});}
+seg();
 
 /* ---------- inicio ---------- */
 function fromHash(){const h=(location.hash||'#1').slice(1).toLowerCase();const n=parseInt(h,10);
