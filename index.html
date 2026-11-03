@@ -170,7 +170,7 @@ textarea:focus{border-color:var(--azul);box-shadow:0 0 0 6px rgba(59,130,246,.15
   <nav id="nav">
     <button data-i="0"><span>1</span>Antes vs Ahora</button>
     <button data-i="1"><span>2</span>Mesa de ayuda</button>
-    <button data-i="2"><span>3</span>Agentes</button>
+    <button data-i="2"><span>3</span>Equipo IA</button>
     <button data-i="3"><span>4</span>Plataforma</button>
     <button data-i="4"><span>5</span>Prueba la IA</button>
     <button data-i="5"><span>6</span>Bitácora</button>
@@ -222,8 +222,8 @@ textarea:focus{border-color:var(--azul);box-shadow:0 0 0 6px rgba(59,130,246,.15
 
 <!-- Agentes -->
 <section id="sA">
-  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><h1>Agentes de IA que <em>trabajan en equipo</em></h1><span class="tag">Esquema conceptual</span></div>
-  <div><div class="atabs" id="atabs"><button class="on" data-f="sop">🛠️ Soporte SIIS</button><button data-f="pan">📊 Construcción de paneles</button></div></div>
+  <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><h1>La IA trabaja como <em>un equipo médico</em></h1><span class="tag">Ilustración</span></div>
+  <div><div class="atabs" id="atabs"><button class="on" data-f="sop">🚑 Cuando algo falla</button><button data-f="pan">📊 Un tablero nuevo</button></div></div>
   <div class="flow" id="flow"></div>
   <div class="ctrl"><button class="go" id="play">▶ Ver el flujo</button><span class="src" id="fnote" style="margin-top:0"></span></div>
 </section>
@@ -513,18 +513,18 @@ onEnter[5]=fillLog;
 
 /* ---------- Agentes ---------- */
 const FLOWS={
- sop:{note:'Los módulos de SIIS son ejemplos. Una persona siempre confirma antes de corregir.',nodes:[
-  {c:'',ic:'🙋',h:'Soporte pregunta',p:'“¿Por qué falla esto en el sistema?”'},
-  {c:'az',ic:'🧭',h:'Orquestador',p:'Entiende la pregunta y llama al experto indicado.'},
-  {c:'az',ic:'🧑‍💻',h:'Expertos por módulo',p:'Buscan en el código y en los datos.',exp:['Admisiones','Facturación','Historia clínica','Farmacia']},
-  {c:'am',ic:'🔎',h:'Causa raíz',p:'El error y su evidencia, no solo el síntoma.'},
-  {c:'ve',ic:'✅',h:'Una persona confirma',p:'Y Desarrollo corrige de raíz para que no vuelva.'}]},
- pan:{note:'Reglas escritas + contexto del caso + barandas: solo lectura, consultas validadas, permisos y auditoría. La IA propone; una persona decide.',nodes:[
-  {c:'',ic:'🎙️',h:'Entrevista con el usuario',p:'La transcripción es el punto de partida.'},
-  {c:'az',ic:'🧭',h:'Orquestador',p:'Reparte el trabajo entre expertos.'},
-  {c:'az',ic:'🤝',h:'Agentes expertos',p:'Cada uno aporta su parte.',exp:['Negocio','Base de datos','Diseño UI / BI','Constructor']},
-  {c:'ve',ic:'🚀',h:'Módulo nuevo en el Panel',p:'Con datos validados y diseño claro.'},
-  {c:'am',ic:'🎯',h:'Cierre en Jira',p:'Con el impacto medido.'}]}
+ sop:{note:'Como en urgencias. Las especialidades son ejemplos. Una persona siempre confirma antes de corregir.',nodes:[
+  {c:'',ic:'🙋',h:'Algo falla',p:'Soporte cuenta el síntoma.'},
+  {c:'az',ic:'🩺',h:'“Médico de turno”',p:'La IA escucha y deriva al especialista.'},
+  {c:'az',ic:'🧑‍⚕️',h:'Especialistas IA',p:'Uno por cada parte del sistema.',exp:['Admisiones','Facturación','Historia clínica','Farmacia']},
+  {c:'am',ic:'🔬',h:'Diagnóstico',p:'La causa real, no solo el síntoma.'},
+  {c:'ve',ic:'👨‍⚕️',h:'Junta médica',p:'Una persona confirma y se corrige para que no vuelva.'}]},
+ pan:{note:'Como una interconsulta. La IA se formó como un residente: protocolos, la historia del caso y supervisión. Solo consulta, no inventa, todo queda registrado y una persona decide.',nodes:[
+  {c:'',ic:'🗣️',h:'La consulta',p:'Escuchamos al área y queda por escrito.'},
+  {c:'az',ic:'🩺',h:'“Médico de turno”',p:'La IA reparte el caso.'},
+  {c:'az',ic:'🧑‍⚕️',h:'Especialistas IA',p:'Cada uno aporta lo suyo.',exp:['Entiende el proceso','Busca los datos','Diseña la pantalla','La construye']},
+  {c:'ve',ic:'👨‍⚕️',h:'El jefe revisa',p:'Nada sale sin visto bueno.'},
+  {c:'am',ic:'🚀',h:'Tablero nuevo',p:'Y medimos si sirvió.'}]}
 };
 let curF='sop', timers=[];
 function drawFlow(){
